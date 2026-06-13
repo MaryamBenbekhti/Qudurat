@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BookOpen, LogIn } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 const schema = z.object({
   email: z.string().email("بريد إلكتروني غير صحيح"),
@@ -23,9 +23,11 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   async function onSubmit(data: FormData) {
     setLoading(true);
@@ -45,25 +47,34 @@ function LoginForm() {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-navy-950 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
+    <div dir="rtl" className="min-h-screen bg-[#080e1a] flex items-center justify-center px-4 py-16 relative">
+      {/* Ambient */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-amber-500/[0.05] rounded-full blur-[80px]" />
+        <div className="absolute inset-0 bg-dot-grid" />
+      </div>
+
+      <div className="relative w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-xl shadow-amber-500/30 mx-auto mb-4">
-            <BookOpen size={26} className="text-white" />
+        <div className="text-center mb-8 space-y-3">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-xl shadow-amber-500/30 mx-auto">
+            <BookOpen size={24} className="text-white" />
           </div>
-          <h1 className="text-3xl font-black text-white">تسجيل الدخول</h1>
-          <p className="text-slate-400 mt-2">مرحباً بعودتك!</p>
+          <div>
+            <h1 className="text-3xl font-black text-white">مرحباً بعودتك</h1>
+            <p className="text-slate-500 text-sm mt-1">سجّل الدخول لمتابعة رحلتك</p>
+          </div>
         </div>
 
-        <div className="bg-navy-800/60 border border-navy-600/50 rounded-2xl p-8 backdrop-blur-sm">
+        {/* Card */}
+        <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#142035] to-[#0f1b30] p-7">
           {error && (
-            <div className="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-3 text-red-400 text-sm text-center">
+            <div className="mb-5 rounded-xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3 text-sm text-red-400 text-center">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input
               id="email"
               type="email"
@@ -81,18 +92,24 @@ function LoginForm() {
               {...register("password")}
             />
 
-            <Button type="submit" className="w-full" size="lg" loading={loading}>
-              <LogIn size={18} />
+            <Button type="submit" className="w-full mt-2" size="lg" loading={loading}>
               تسجيل الدخول
             </Button>
           </form>
 
-          <p className="text-center text-slate-400 text-sm mt-6">
+          <p className="text-center text-slate-500 text-sm mt-6">
             ليس لديك حساب؟{" "}
-            <Link href="/register" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+            <Link href="/register" className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">
               أنشئ حساباً الآن
             </Link>
           </p>
+        </div>
+
+        {/* Back home */}
+        <div className="text-center mt-5">
+          <Link href="/" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">
+            → العودة للصفحة الرئيسية
+          </Link>
         </div>
       </div>
     </div>

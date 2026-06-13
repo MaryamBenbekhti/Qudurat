@@ -3,65 +3,88 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, BookOpen, LogOut, User, LayoutDashboard } from "lucide-react";
+import { BookOpen, Menu, X, LogOut, LayoutDashboard, Zap, Flame, CheckSquare } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 border-b border-navy-700/50 bg-navy-900/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:shadow-amber-500/40 transition-shadow">
-              <BookOpen size={18} className="text-white" />
-            </div>
-            <span className="text-xl font-bold text-white" dir="rtl">
-              قُدرات
-            </span>
-          </Link>
+    <header className="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] glass-strong">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-[60px]">
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
-              الرئيسية
+          {/* Logo — right side in RTL */}
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/40 transition-shadow">
+                <BookOpen size={15} className="text-white" />
+              </div>
+              <div className="leading-none">
+                <span className="text-base font-black text-white tracking-tight" dir="rtl">القدرات الكمي</span>
+                <span className="block text-[10px] text-amber-400/70 font-medium">فكر أقل، حل أسرع</span>
+              </div>
             </Link>
-            <Link href="/packages" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
-              الباقات
-            </Link>
-            {session && (
-              <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-sm font-medium">
-                لوحة التحكم
-              </Link>
-            )}
-          </nav>
 
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+            {/* Desktop nav links */}
+            <nav className="hidden md:flex items-center gap-1">
+              {[
+                { href: "/", label: "الرئيسية" },
+                { href: "/packages", label: "الباقات" },
+                ...(session ? [{ href: "/dashboard", label: "لوحة التحكم" }] : []),
+              ].map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="px-3 py-1.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/[0.05] transition-all"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Right side — gamification + auth */}
+          <div className="hidden md:flex items-center gap-2">
             {session ? (
-              <div className="flex items-center gap-3">
+              <>
+                {/* Gamification indicators — matching reference design */}
+                <div className="flex items-center gap-1.5 mr-1">
+                  <GamificationChip
+                    icon={<CheckSquare size={13} className="text-emerald-400" />}
+                    value="0/0"
+                    color="emerald"
+                  />
+                  <GamificationChip
+                    icon={<Flame size={13} className="text-orange-400" />}
+                    value="0"
+                    color="orange"
+                  />
+                  <GamificationChip
+                    icon={<Zap size={13} className="text-amber-400" />}
+                    value="XP 0"
+                    color="amber"
+                  />
+                </div>
+
                 {session.user.isPremium && (
-                  <span className="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-full font-medium">
-                    Premium ✨
+                  <span className="text-[11px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/25 px-2.5 py-1 rounded-full">
+                    ✨ مميز
                   </span>
                 )}
-                <span className="text-sm text-slate-400">{session.user.name}</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="gap-1.5"
+                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5"
                 >
-                  <LogOut size={15} />
+                  <LogOut size={13} />
                   خروج
-                </Button>
-              </div>
+                </button>
+              </>
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" size="sm">تسجيل الدخول</Button>
+                  <Button variant="ghost" size="sm" className="text-slate-400">تسجيل الدخول</Button>
                 </Link>
                 <Link href="/register">
                   <Button size="sm">إنشاء حساب</Button>
@@ -70,43 +93,77 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile hamburger */}
           <button
-            className="md:hidden text-slate-300 hover:text-white"
+            className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             onClick={() => setOpen(!open)}
+            aria-label="القائمة"
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-navy-700 bg-navy-900/95 backdrop-blur-md px-4 py-4 space-y-3">
-          <Link href="/" className="block text-slate-300 hover:text-white py-2" onClick={() => setOpen(false)}>الرئيسية</Link>
-          <Link href="/packages" className="block text-slate-300 hover:text-white py-2" onClick={() => setOpen(false)}>الباقات</Link>
-          {session && (
-            <Link href="/dashboard" className="flex items-center gap-2 text-slate-300 hover:text-white py-2" onClick={() => setOpen(false)}>
-              <LayoutDashboard size={16} /> لوحة التحكم
+        <div className="md:hidden border-t border-white/[0.07] bg-[#080e1a]/95 backdrop-blur-xl px-4 py-4 space-y-1">
+          {[
+            { href: "/", label: "الرئيسية" },
+            { href: "/packages", label: "الباقات" },
+            ...(session ? [{ href: "/dashboard", label: "لوحة التحكم" }] : []),
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all text-sm"
+              onClick={() => setOpen(false)}
+            >
+              {label}
             </Link>
-          )}
-          <div className="pt-2 border-t border-navy-700">
+          ))}
+          <div className="pt-2 border-t border-white/[0.07] mt-2">
             {session ? (
               <button
                 onClick={() => { signOut({ callbackUrl: "/" }); setOpen(false); }}
-                className="flex items-center gap-2 text-slate-400 hover:text-white py-2"
+                className="flex items-center gap-2 px-3 py-2.5 text-sm text-slate-400 hover:text-white transition-colors"
               >
-                <LogOut size={16} /> تسجيل خروج
+                <LogOut size={15} /> تسجيل خروج
               </button>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link href="/login" onClick={() => setOpen(false)}><Button variant="secondary" className="w-full">تسجيل الدخول</Button></Link>
-                <Link href="/register" onClick={() => setOpen(false)}><Button className="w-full">إنشاء حساب</Button></Link>
+                <Link href="/login" onClick={() => setOpen(false)}>
+                  <Button variant="secondary" className="w-full" size="sm">تسجيل الدخول</Button>
+                </Link>
+                <Link href="/register" onClick={() => setOpen(false)}>
+                  <Button className="w-full" size="sm">إنشاء حساب</Button>
+                </Link>
               </div>
             )}
           </div>
         </div>
       )}
     </header>
+  );
+}
+
+function GamificationChip({
+  icon,
+  value,
+  color,
+}: {
+  icon: React.ReactNode;
+  value: string;
+  color: "emerald" | "orange" | "amber";
+}) {
+  const colors: Record<string, string> = {
+    emerald: "bg-emerald-500/10 border-emerald-500/20 text-emerald-300",
+    orange:  "bg-orange-500/10 border-orange-500/20 text-orange-300",
+    amber:   "bg-amber-500/10 border-amber-500/20 text-amber-300",
+  };
+  return (
+    <div className={cn("flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-bold", colors[color])}>
+      {icon}
+      {value}
+    </div>
   );
 }
