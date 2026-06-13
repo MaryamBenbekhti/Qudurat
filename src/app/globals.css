@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cairo: var(--font-cairo);
+
+  --color-navy-950: #050d1a;
+  --color-navy-900: #0a1628;
+  --color-navy-800: #0f2040;
+  --color-navy-700: #162b52;
+  --color-navy-600: #1e3a6a;
+  --color-navy-500: #2a4d8a;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-cairo), system-ui, sans-serif;
+    background-color: var(--color-navy-950);
+  }
+
+  ::selection {
+    background-color: rgba(245, 158, 11, 0.3);
+    color: white;
+  }
+}
+
+@layer utilities {
+  .font-cairo {
+    font-family: var(--font-cairo), system-ui, sans-serif;
+  }
+
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.15);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
