@@ -6,7 +6,9 @@ interface ProgressBarProps {
   max?: number;
   className?: string;
   showLabel?: boolean;
-  color?: "amber" | "green" | "blue" | "red";
+  label?: string;
+  color?: "amber" | "green" | "blue" | "red" | "purple";
+  size?: "xs" | "sm" | "md";
 }
 
 export function ProgressBar({
@@ -14,27 +16,39 @@ export function ProgressBar({
   max = 100,
   className,
   showLabel,
+  label,
   color = "amber",
+  size = "sm",
 }: ProgressBarProps) {
-  const pct = Math.min((value / max) * 100, 100);
+  const pct = Math.min(Math.max((value / max) * 100, 0), 100);
 
-  const colors = {
-    amber: "from-amber-500 to-orange-500",
-    green: "from-emerald-500 to-teal-500",
-    blue: "from-blue-500 to-indigo-500",
-    red: "from-red-500 to-rose-500",
+  const gradients: Record<string, string> = {
+    amber:  "from-amber-500 to-orange-400",
+    green:  "from-emerald-500 to-teal-400",
+    blue:   "from-blue-500 to-indigo-400",
+    red:    "from-red-500 to-rose-400",
+    purple: "from-purple-500 to-violet-400",
+  };
+
+  const heights: Record<string, string> = {
+    xs: "h-1",
+    sm: "h-2",
+    md: "h-3",
   };
 
   return (
-    <div className={cn("space-y-1", className)}>
-      {showLabel && (
-        <span className="text-sm text-slate-400">{Math.round(pct)}%</span>
+    <div className={cn("space-y-1.5", className)}>
+      {(showLabel || label) && (
+        <div className="flex items-center justify-between text-xs text-slate-400">
+          {label && <span>{label}</span>}
+          {showLabel && <span className="font-semibold text-slate-300">{Math.round(pct)}%</span>}
+        </div>
       )}
-      <div className="h-2.5 w-full rounded-full bg-navy-700/80 overflow-hidden">
+      <div className={cn("w-full rounded-full bg-white/[0.06] overflow-hidden", heights[size])}>
         <div
           className={cn(
-            "h-full rounded-full bg-gradient-to-r transition-all duration-500",
-            colors[color]
+            "h-full rounded-full bg-gradient-to-r transition-all duration-700 ease-out",
+            gradients[color]
           )}
           style={{ width: `${pct}%` }}
         />
