@@ -1,28 +1,7 @@
-import { auth } from "@/lib/auth";
-import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "@/lib/auth.config";
 
-const PROTECTED = ["/dashboard", "/practice", "/exam"];
-const AUTH_ROUTES = ["/login", "/register"];
-
-export default auth((req) => {
-  const { pathname } = req.nextUrl;
-  const isLoggedIn = !!req.auth;
-
-  const isProtected = PROTECTED.some((p) => pathname.startsWith(p));
-  const isAuthRoute = AUTH_ROUTES.some((p) => pathname.startsWith(p));
-
-  if (isProtected && !isLoggedIn) {
-    return NextResponse.redirect(
-      new URL(`/login?callbackUrl=${encodeURIComponent(pathname)}`, req.url)
-    );
-  }
-
-  if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
-
-  return NextResponse.next();
-});
+export default NextAuth(authConfig).auth;
 
 export const config = {
   matcher: [
