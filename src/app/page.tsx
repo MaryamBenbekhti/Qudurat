@@ -175,12 +175,12 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-black text-white mb-1">مريم بن بخيتي</h3>
-                <p className="text-amber-400 text-sm font-semibold mb-6">مختصة اختبار القدرات الكمي</p>
+                <h3 className="text-xl font-black text-white mb-1">محمد صالح</h3>
+                <p className="text-amber-400 text-sm font-semibold mb-6">مختص في القدرات والرياضيات</p>
 
                 <div className="flex flex-col gap-2.5 w-full">
                   {[
-                    { icon: Award,       label: "خبرة +5 سنوات في التدريس" },
+                    { icon: Award,       label: "خبرة 20 سنة في التدريس" },
                     { icon: Users,       label: "+200 طالب استفادوا من المنصة" },
                     { icon: TrendingUp,  label: "95% نسبة نجاح الطلاب" },
                   ].map(({ icon: Icon, label }) => (
@@ -196,7 +196,7 @@ export default function HomePage() {
               <div className="md:col-span-3 p-8 flex flex-col justify-center">
                 <div className="badge badge-amber mb-5 w-fit">
                   <Target size={10} />
-                  عن المدرّسة
+                  عن المدرّس
                 </div>
 
                 <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight mb-5">
@@ -205,7 +205,7 @@ export default function HomePage() {
                 </h2>
 
                 <div className="space-y-3.5 text-slate-400 text-sm leading-relaxed">
-                  <p>أنا مريم، متخصصة في تدريس القسم الكمي لاختبار القدرات العامة (قياس). أساعد طلاب الثانوية على إتقان المفاهيم الرياضية بطريقة ذكية وسريعة تناسب ضغط الوقت في الاختبار الحقيقي.</p>
+                  <p>أنا محمد صالح، مختص في القدرات والرياضيات بخبرة 20 سنة في التدريس. أساعد طلاب الثانوية على إتقان المفاهيم الرياضية بطريقة ذكية وسريعة تناسب ضغط الوقت في الاختبار الحقيقي.</p>
                   <p>منهجيتي تعتمد على الأساليب المختصرة وحيل الحل السريع — لأن الدقيقتين لكل سؤال تحتاج تفكيراً مختلفاً. صممت هذه المنصة لتكون رفيقك الذكي في رحلة التحضير.</p>
                 </div>
 
