@@ -210,6 +210,13 @@ async function main() {
     })),
   });
 
+  // Set admin user
+  await prisma.user.updateMany({
+    where: { email: "marie.benbekhti@gmail.com" },
+    data: { isAdmin: true },
+  });
+  console.log("✅ Admin user set.");
+
   console.log(`✅ Seeded ${all.length} questions successfully!`);
   await prisma.$disconnect();
 }
