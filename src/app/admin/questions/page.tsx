@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import DeleteButton from "./delete-button";
 
 export const dynamic = "force-dynamic";
 
@@ -137,19 +138,3 @@ export default async function AdminQuestionsPage({
   );
 }
 
-function DeleteButton({ id }: { id: string }) {
-  return (
-    <form action={`/api/admin/questions/${id}`} method="POST">
-      <input type="hidden" name="_method" value="DELETE" />
-      <button
-        type="submit"
-        className="text-red-500 hover:underline text-xs"
-        onClick={(e) => {
-          if (!confirm("هل أنت متأكد من حذف هذا السؤال؟")) e.preventDefault();
-        }}
-      >
-        حذف
-      </button>
-    </form>
-  );
-}
