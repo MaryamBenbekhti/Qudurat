@@ -1,13 +1,9 @@
-import { PrismaClient, Category, Difficulty } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter } as ConstructorParameters<typeof PrismaClient>[0]);
 
-type Q = { question: string; options: string[]; correctAnswer: number; explanation: string; category: Category; difficulty?: Difficulty };
+type Q = { question: string; options: string[]; correctAnswer: number; explanation: string; category: string; difficulty?: string };
 
 const algebraQuestions: Q[] = [
   { question: "حل: ٤س − ٩ = ٣س + ٥", options: ["١٣", "١٤", "١١", "١٢"], correctAnswer: 1, explanation: "ننقل الحدود: ٤س − ٣س = ٥ + ٩ ← س = ١٤.", category: "ALGEBRA" },
@@ -186,8 +182,8 @@ const exam2025Questions: Q[] = [
 async function main() {
   console.log("🌱 Seeding questions...");
 
-  await prisma.attempt.deleteMany();
-  await prisma.question.deleteMany();
+  await pool.query(`DELETE FROM "Attempt"`);
+  await pool.query(`DELETE FROM "Question"`);
 
   const all = [
     ...algebraQuestions,
@@ -199,26 +195,23 @@ async function main() {
     ...exam2025Questions,
   ];
 
-  await prisma.question.createMany({
-    data: all.map((q) => ({
-      category: q.category,
-      question: q.question,
-      options: q.options,
-      correctAnswer: q.correctAnswer,
-      explanation: q.explanation,
-      difficulty: q.difficulty ?? "MEDIUM",
-    })),
-  });
+  for (const q of all) {
+    await pool.query(
+      `INSERT INTO "Question" (id, category, question, options, "correctAnswer", explanation, difficulty, "createdAt")
+       VALUES (gen_random_uuid(), $1, $2, $3::jsonb, $4, $5, $6, NOW())`,
+      [q.category, q.question, JSON.stringify(q.options), q.correctAnswer, q.explanation, q.difficulty ?? "MEDIUM"]
+    );
+  }
 
   // Set admin user
-  await prisma.user.updateMany({
-    where: { email: "marie.benbekhti@gmail.com" },
-    data: { isAdmin: true },
-  });
+  await pool.query(
+    `UPDATE "User" SET "isAdmin" = true WHERE email = $1`,
+    ["marie.benbekhti@gmail.com"]
+  );
   console.log("✅ Admin user set.");
 
   console.log(`✅ Seeded ${all.length} questions successfully!`);
-  await prisma.$disconnect();
+  await pool.end();
 }
 
 main().catch((e) => {
