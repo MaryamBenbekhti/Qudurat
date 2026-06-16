@@ -40,6 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: user.email,
           name: user.name,
           isPremium: user.isPremium,
+          isAdmin: user.isAdmin,
         };
       },
     }),
@@ -49,14 +50,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.isPremium = (user as { isPremium?: boolean }).isPremium ?? false;
+        token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? false;
       }
-      // Refresh premium status from DB on each token refresh
       if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
-          select: { isPremium: true },
+          select: { isPremium: true, isAdmin: true },
         });
-        if (dbUser) token.isPremium = dbUser.isPremium;
+        if (dbUser) {
+          token.isPremium = dbUser.isPremium;
+          token.isAdmin = dbUser.isAdmin;
+        }
       }
       return token;
     },
@@ -64,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token) {
         session.user.id = token.id as string;
         session.user.isPremium = token.isPremium as boolean;
+        session.user.isAdmin = token.isAdmin as boolean;
       }
       return session;
     },
