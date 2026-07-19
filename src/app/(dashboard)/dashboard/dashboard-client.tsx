@@ -195,14 +195,14 @@ export function DashboardClient({
           {[
             {
               href: "/exam/2025",
-              label: "10 أسئلة بتوقيت",
+              label: "أسئلة بتوقيت",
               sub: "محاكاة اختبار قياس",
               icon: "⏱️",
               color: "from-amber-500/10 to-orange-500/5 border-amber-500/20",
             },
             {
-              href: "/exam/2025",
-              label: "5 أسئلة سريعة",
+              href: "/exam/quick",
+              label: " أسئلة سريعة ذهنية",
               sub: "تدريب خفيف ومركّز",
               icon: "⚡",
               color: "from-blue-500/10 to-indigo-500/5 border-blue-500/20",
