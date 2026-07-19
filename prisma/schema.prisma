@@ -130,6 +130,7 @@ enum Category {
   EXAM_2025
   EXAM_2024
   EXAM_2023
+  EXAM_QUICK
 }
 
 enum Difficulty {
