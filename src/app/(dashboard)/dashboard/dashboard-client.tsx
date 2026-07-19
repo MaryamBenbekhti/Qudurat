@@ -196,7 +196,7 @@ export function DashboardClient({
             {
               href: "/exam/2025",
               label: "أسئلة بتوقيت",
-              sub: "محاكاة اختبار قياس",
+              sub: "أسئلة تدريبية مع وقت",
               icon: "⏱️",
               color: "from-amber-500/10 to-orange-500/5 border-amber-500/20",
             },
