@@ -98,13 +98,13 @@ export default async function TimedPage() {
   }
 
   const formattedQuestions = questions.length > 0
-    ? questions.map((q) => ({
-        id: q.id,
-        question: q.question,
-        options: q.options as string[],
-        correctAnswer: q.correctAnswer,
-        explanation: q.explanation ?? "",
-      }))
+    ? questions.map((q: { id: any; question: any; options: string[]; correctAnswer: any; explanation: any; }) => ({
+      id: q.id,
+      question: q.question,
+      options: q.options as string[],
+      correctAnswer: q.correctAnswer,
+      explanation: q.explanation ?? "",
+    }))
     : FALLBACK_TIMED_QUESTIONS;
 
   return (
