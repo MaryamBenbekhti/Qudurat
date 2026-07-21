@@ -194,14 +194,14 @@ export function DashboardClient({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
-              href: "/exam/2025",
+              href: "/timed",
               label: "أسئلة بتوقيت",
               sub: "أسئلة تدريبية مع وقت",
               icon: "⏱️",
               color: "from-amber-500/10 to-orange-500/5 border-amber-500/20",
             },
             {
-              href: "/exam/quick",
+              href: "/quick",
               label: " أسئلة سريعة ذهنية",
               sub: "تدريب خفيف ومركّز",
               icon: "⚡",
