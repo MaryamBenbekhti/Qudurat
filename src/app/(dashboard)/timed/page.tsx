@@ -82,20 +82,9 @@ export default async function TimedPage() {
   if (!session.user.isPremium) redirect("/packages");
 
   let questions = await prisma.question.findMany({
-    where: { category: "EXAM_2025" },
     take: 10,
     orderBy: { createdAt: "asc" },
   });
-
-  if (!questions || questions.length === 0) {
-    const fallbackDb = await prisma.question.findMany({
-      take: 10,
-      orderBy: { createdAt: "asc" },
-    });
-    if (fallbackDb.length > 0) {
-      questions = fallbackDb;
-    }
-  }
 
   const formattedQuestions = questions.length > 0
     ? questions.map((q: { id: any; question: any; options: string[]; correctAnswer: any; explanation: any; }) => ({
@@ -109,7 +98,7 @@ export default async function TimedPage() {
 
   return (
     <ExamClient
-      year={2025}
+      title="أسئلة بتوقيت"
       userId={session.user.id}
       questions={formattedQuestions}
     />

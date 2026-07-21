@@ -18,15 +18,17 @@ type Question = {
 };
 
 interface Props {
-  year: number;
+  year?: number;
+  title?: string;
   userId: string;
   questions: Question[];
 }
 
 type Phase = "intro" | "exam" | "review" | "finished";
 
-export function ExamClient({ year, questions }: Props) {
+export function ExamClient({ year, title, questions }: Props) {
   const router = useRouter();
+  const displayTitle = title ?? (year ? `اختبار ${year}` : "اختبار بتوقيت");
   const [phase, setPhase] = useState<Phase>("intro");
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(
@@ -84,7 +86,7 @@ export function ExamClient({ year, questions }: Props) {
               <span className="text-3xl">📝</span>
             </div>
             <div>
-              <h1 className="text-4xl font-black text-white">اختبار {year}</h1>
+              <h1 className="text-4xl font-black text-white">{displayTitle}</h1>
               <p className="text-slate-500 mt-1 text-sm">اختبار قياس الحقيقي</p>
             </div>
 
