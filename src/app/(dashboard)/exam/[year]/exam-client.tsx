@@ -124,7 +124,7 @@ export function ExamClient({ year, title, questions }: Props) {
           <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#142035] to-[#0f1b30] p-8 text-center space-y-5">
             <div className="text-7xl">{pct >= 70 ? "🏆" : pct >= 50 ? "👍" : "📚"}</div>
             <div>
-              <h2 className="text-3xl font-black text-white">اختبار {year}</h2>
+              <h2 className="text-3xl font-black text-white">{displayTitle}</h2>
               <p className="text-slate-500 text-sm mt-1">انتهى الاختبار</p>
             </div>
             <div>
@@ -152,7 +152,7 @@ export function ExamClient({ year, title, questions }: Props) {
       <div dir="rtl" className="min-h-screen bg-[#080e1a] py-8 px-4">
         <div className="max-w-2xl mx-auto space-y-5">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-black text-white">مراجعة الإجابات — {year}</h1>
+            <h1 className="text-2xl font-black text-white">مراجعة الإجابات — {displayTitle}</h1>
             <Button variant="secondary" size="sm" onClick={() => router.push("/dashboard")}>
               <Home size={14} /> لوحة التحكم
             </Button>
@@ -187,8 +187,8 @@ export function ExamClient({ year, title, questions }: Props) {
                         j === q.correctAnswer
                           ? "bg-emerald-500/10 text-emerald-300"
                           : j === sel && j !== q.correctAnswer
-                          ? "bg-red-500/10 text-red-300"
-                          : "text-slate-600"
+                            ? "bg-red-500/10 text-red-300"
+                            : "text-slate-600"
                       )}
                     >
                       <span className="font-bold flex-shrink-0">{ARABIC_OPTIONS[j]}.</span>
@@ -228,9 +228,9 @@ export function ExamClient({ year, title, questions }: Props) {
           {/* Timer */}
           <div className={cn(
             "flex items-center gap-2 px-4 py-2 rounded-xl border font-mono font-black text-lg transition-colors",
-            isUrgent  ? "border-red-500/40 bg-red-500/10 text-red-400 animate-pulse"    :
-            isWarning ? "border-amber-500/40 bg-amber-500/10 text-amber-400"             :
-                        "border-emerald-500/25 bg-emerald-500/[0.07] text-emerald-400"
+            isUrgent ? "border-red-500/40 bg-red-500/10 text-red-400 animate-pulse" :
+              isWarning ? "border-amber-500/40 bg-amber-500/10 text-amber-400" :
+                "border-emerald-500/25 bg-emerald-500/[0.07] text-emerald-400"
           )}>
             <Clock size={16} />
             {formatTime(timeLeft)}
@@ -300,9 +300,9 @@ export function ExamClient({ year, title, questions }: Props) {
               key={i}
               className={cn(
                 "w-2 h-2 rounded-full transition-colors",
-                i === idx       ? "bg-amber-400"         :
-                answers[i] !== null ? "bg-emerald-500/60" :
-                                  "bg-white/10"
+                i === idx ? "bg-amber-400" :
+                  answers[i] !== null ? "bg-emerald-500/60" :
+                    "bg-white/10"
               )}
             />
           ))}
