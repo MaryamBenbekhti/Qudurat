@@ -44,10 +44,10 @@ export default async function PracticePage({
     <PracticeClient
       category={category}
       categoryLabel={CATEGORY_LABELS[category]}
-      questions={questions.map((q: { id: any; question: any; options: string[]; correctAnswer: any; explanation: any; difficulty: any; }) => ({
+      questions={questions.map((q) => ({
         id: q.id,
         question: q.question,
-        options: q.options as string[],
+        options: (q.options as string[]) ?? [],
         correctAnswer: q.correctAnswer,
         explanation: q.explanation,
         difficulty: q.difficulty,
