@@ -9,6 +9,7 @@ function toCategoryEnum(slug: string): Category | null {
   const map: Record<string, Category> = {
     geometry: "GEOMETRY",
     numbers_equations: "NUMBERS_EQUATIONS",
+    "numbers-equations": "NUMBERS_EQUATIONS",
     algebra: "ALGEBRA",
     patterns: "PATTERNS",
     probability: "PROBABILITY",

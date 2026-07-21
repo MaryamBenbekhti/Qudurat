@@ -68,7 +68,7 @@ export default async function QuickPage() {
   }
 
   const formattedQuestions = questions.length > 0
-    ? questions.map((q: { id: any; question: any; options: string[]; correctAnswer: any; explanation: any; difficulty: any; }) => ({
+    ? questions.map((q) => ({
       id: q.id,
       question: q.question,
       options: q.options as string[],
