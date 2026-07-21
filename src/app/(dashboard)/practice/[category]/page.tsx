@@ -13,6 +13,11 @@ function toCategoryEnum(slug: string): Category | null {
     patterns: Category.PATTERNS,
     probability: Category.PROBABILITY,
     ratio: Category.RATIO,
+    exam_2023: Category.EXAM_2023,
+    exam_2024: Category.EXAM_2024,
+    exam_2025: Category.EXAM_2025,
+    exam_quick: Category.EXAM_QUICK,
+    exam_timed: Category.EXAM_TIMED,
   };
   return map[slug.toLowerCase()] ?? null;
 }
