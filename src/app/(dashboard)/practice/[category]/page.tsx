@@ -1,19 +1,18 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { Category } from "@prisma/client";
 import { CATEGORY_LABELS } from "@/lib/utils";
 import { PracticeClient } from "./practice-client";
+import { Category } from "@prisma/client";
 
 function toCategoryEnum(slug: string): Category | null {
   const map: Record<string, Category> = {
-    geometry: "GEOMETRY",
-    numbers_equations: "NUMBERS_EQUATIONS",
-    "numbers-equations": "NUMBERS_EQUATIONS",
-    algebra: "ALGEBRA",
-    patterns: "PATTERNS",
-    probability: "PROBABILITY",
-    ratio: "RATIO",
+    geometry: Category.GEOMETRY,
+    numbers_equations: Category.NUMBERS_EQUATIONS,
+    algebra: Category.ALGEBRA,
+    patterns: Category.PATTERNS,
+    probability: Category.PROBABILITY,
+    ratio: Category.RATIO,
   };
   return map[slug.toLowerCase()] ?? null;
 }
@@ -40,7 +39,7 @@ export default async function PracticePage({
     <PracticeClient
       category={category}
       categoryLabel={CATEGORY_LABELS[category]}
-      questions={questions.map((q) => ({
+      questions={questions.map((q: { id: any; question: any; options: string[]; correctAnswer: any; explanation: any; difficulty: any; }) => ({
         id: q.id,
         question: q.question,
         options: q.options as string[],
