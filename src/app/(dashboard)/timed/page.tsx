@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { Category } from "@prisma/client";
 import { ExamClient } from "@/app/(dashboard)/exam/[year]/exam-client";
 
 const FALLBACK_TIMED_QUESTIONS = [
@@ -82,6 +83,7 @@ export default async function TimedPage() {
   if (!session.user.isPremium) redirect("/packages");
 
   let questions = await prisma.question.findMany({
+    where: { category: Category.EXAM_TIMED },
     take: 10,
     orderBy: { createdAt: "asc" },
   });
