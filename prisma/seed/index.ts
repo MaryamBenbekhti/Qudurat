@@ -179,6 +179,14 @@ const exam2025Questions: Q[] = [
   { question: "إذا كان متوسط درجات فصل ٨٥ قبل اختبار طالب غائب، وبعد اختباره حصل على ٣٠ وأصبح المتوسط ٨٠، فما عدد الطلاب؟", options: ["٩", "١٠", "١١", "١٢"], correctAnswer: 2, explanation: "الفارق في المتوسط = ٥ درجات. الفارق الكلي بسبب الطالب = ٨٥ - ٣٠ = ٥٥. عدد الطلاب = ٥٥ ÷ ٥ = ١١ طالباً.", category: "EXAM_2025" },
 ];
 
+const examQuickQuestions: Q[] = [
+  { question: "حل المعادلة: ٤س − ٩ = ٣س + ٥", options: ["١١", "١٤", "١٣", "١٢"], correctAnswer: 1, explanation: "ننقل الحدود: ٤س − ٣س = ٥ + ٩ ← س = ١٤.", category: "EXAM_QUICK", difficulty: "EASY" },
+  { question: "ما قيمة ٤٠٪ من ٢٥٠؟", options: ["١٠٠", "٩٠", "٨٠", "١٢٠"], correctAnswer: 0, explanation: "٢٥٠ × ٠.٤ = ١٠٠.", category: "EXAM_QUICK", difficulty: "EASY" },
+  { question: "مستطيل طوله ٨ سم وعرضه ٥ سم. ما مساحته؟", options: ["٢٦", "٣٠", "٤٥", "٤٠"], correctAnswer: 3, explanation: "المساحة = الطول × العرض = ٨ × ٥ = ٤٠ سم².", category: "EXAM_QUICK", difficulty: "MEDIUM" },
+  { question: "سيارة تقطع ٢٤٠ كم في ٣ ساعات. كم تقطع في ٥ ساعات؟", options: ["٣٠٠", "٤٥٠", "٥٠٠", "٤٠٠"], correctAnswer: 3, explanation: "السرعة = ٢٤٠ ÷ ٣ = ٨٠ كم/س، إذن المسافة = ٨٠ × ٥ = ٤٠٠ كم.", category: "EXAM_QUICK", difficulty: "MEDIUM" },
+  { question: "في مثلث زاويتان ٦٠° و٧٠°. ما قياس الزاوية الثالثة؟", options: ["٧٠°", "٦٠°", "٥٠°", "٨٠°"], correctAnswer: 2, explanation: "الزاوية الثالثة = ١٨٠° − (٦٠° + ٧٠°) = ٥٠°.", category: "EXAM_QUICK", difficulty: "EASY" },
+];
+
 async function main() {
   console.log("🌱 Seeding questions...");
 
@@ -193,6 +201,7 @@ async function main() {
     ...patternsQuestions,
     ...ratioQuestions,
     ...exam2025Questions,
+    ...examQuickQuestions,
   ];
 
   for (const q of all) {
