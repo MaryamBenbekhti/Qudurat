@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import "katex/dist/katex.min.css";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
