@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { formatTime, cn } from "@/lib/utils";
 import { Clock, Home, AlertTriangle, ChevronLeft } from "lucide-react";
+import MathText from "@/components/MathText";
 
 const SECONDS_PER_Q = 120;
 const ARABIC_OPTIONS = ["أ", "ب", "ج", "د"];
@@ -177,7 +178,9 @@ export function ExamClient({ year, title, questions }: Props) {
                     {correct ? "✓ صحيح" : "✗ خطأ"}
                   </span>
                 </div>
-                <p className="text-white text-sm font-medium leading-relaxed">{q.question}</p>
+                <p className="text-white text-sm font-medium leading-relaxed">
+                  <MathText text={q.question} />
+                </p>
                 <div className="space-y-2">
                   {q.options.map((opt, j) => (
                     <div
@@ -192,13 +195,15 @@ export function ExamClient({ year, title, questions }: Props) {
                       )}
                     >
                       <span className="font-bold flex-shrink-0">{ARABIC_OPTIONS[j]}.</span>
-                      {opt}
+                      <MathText text={opt} />
                     </div>
                   ))}
                 </div>
                 <div className="rounded-xl border border-blue-500/15 bg-blue-500/[0.05] px-4 py-3 flex gap-2">
                   <span className="text-blue-400 text-xs font-bold flex-shrink-0 mt-0.5">💡</span>
-                  <span className="text-slate-300 text-xs leading-relaxed">{q.explanation}</span>
+                  <span className="text-slate-300 text-xs leading-relaxed">
+                    <MathText text={q.explanation} />
+                  </span>
                 </div>
               </div>
             );
@@ -254,7 +259,7 @@ export function ExamClient({ year, title, questions }: Props) {
           )}
 
           <p className="text-white text-base sm:text-lg font-medium leading-relaxed mb-6">
-            {q.question}
+            <MathText text={q.question} />
           </p>
 
           <div className="space-y-3">
@@ -281,7 +286,9 @@ export function ExamClient({ year, title, questions }: Props) {
                 )}>
                   {ARABIC_OPTIONS[i]}
                 </span>
-                <span className="text-sm text-white flex-1 text-right">{opt}</span>
+                <span className="text-sm text-white flex-1 text-right">
+                  <MathText text={opt} />
+                </span>
               </button>
             ))}
           </div>

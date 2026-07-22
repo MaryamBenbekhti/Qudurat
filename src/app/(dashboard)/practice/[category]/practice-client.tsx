@@ -6,6 +6,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { CATEGORY_LABELS } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Home, RotateCcw, CheckCircle, XCircle, Lightbulb } from "lucide-react";
+import MathText from "@/components/MathText";
 
 type Question = {
   id: string;
@@ -156,7 +157,7 @@ export function PracticeClient({ category, categoryLabel, questions }: Props) {
         {/* Question card */}
         <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#142035] to-[#0f1b30] p-6">
           <p className="text-white text-base sm:text-lg font-medium leading-relaxed mb-6">
-            {q.question}
+            <MathText text={q.question} />
           </p>
 
           <div className="space-y-3">
@@ -195,7 +196,9 @@ export function PracticeClient({ category, categoryLabel, questions }: Props) {
                   )}>
                     {ARABIC_OPTIONS[i]}
                   </span>
-                  <span className="text-sm text-white flex-1 text-right">{opt}</span>
+                  <span className="text-sm text-white flex-1 text-right">
+                    <MathText text={opt} />
+                  </span>
                   {phase === "answered" && i === q.correctAnswer && (
                     <CheckCircle size={16} className="text-emerald-400 flex-shrink-0" />
                   )}
@@ -214,7 +217,9 @@ export function PracticeClient({ category, categoryLabel, questions }: Props) {
             <Lightbulb size={18} className="text-blue-400 flex-shrink-0 mt-0.5" />
             <div>
               <div className="text-blue-400 font-bold text-sm mb-1">الشرح</div>
-              <p className="text-slate-300 text-sm leading-relaxed">{q.explanation}</p>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                <MathText text={q.explanation} />
+              </p>
             </div>
           </div>
         )}
